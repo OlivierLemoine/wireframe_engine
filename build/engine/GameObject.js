@@ -10,7 +10,4 @@ export class GameObject {
     addToScene() {
         throw 'unimplemented';
     }
-    getShape() {
-        return { vertices: [], edges: [] };
-    }
 }

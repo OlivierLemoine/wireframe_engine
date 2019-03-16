@@ -25,9 +25,7 @@ export class Vec3 {
     get z() {
         return this.values[2];
     }
-}
-(function (Vec3) {
-    function add(a, b) {
+    static add(a, b) {
         let res = new Vec3();
         if (typeof b === 'number') {
             res.values[0] = a.values[0] + b;
@@ -41,7 +39,7 @@ export class Vec3 {
         }
         return res;
     }
-    function sub(a, b) {
+    static sub(a, b) {
         let res = new Vec3();
         if (typeof b === 'number') {
             res.values[0] = a.values[0] - b;
@@ -55,7 +53,7 @@ export class Vec3 {
         }
         return res;
     }
-    function multiply(a, b) {
+    static multiply(a, b) {
         let res = new Vec3();
         if (typeof b === 'number') {
             res.values[0] = a.values[0] * b;
@@ -69,7 +67,7 @@ export class Vec3 {
         }
         return res;
     }
-    function divide(a, b) {
+    static divide(a, b) {
         let res = new Vec3();
         if (typeof b === 'number') {
             res.values[0] = a.values[0] / b;
@@ -83,4 +81,22 @@ export class Vec3 {
         }
         return res;
     }
-})(Vec3 || (Vec3 = {}));
+    static dotProduct(vec3_1, vec3_2) {
+        return (vec3_1.values[0] * vec3_2.values[0] +
+            vec3_1.values[1] * vec3_2.values[1] +
+            vec3_1.values[2] * vec3_2.values[2]);
+    }
+    static vectorialProduct(vec3_1, vec3_2) {
+        let res = new Vec3();
+        res.values[0] =
+            vec3_1.values[1] * vec3_2.values[2] -
+                vec3_1.values[2] * vec3_2.values[1];
+        res.values[1] =
+            -vec3_1.values[0] * vec3_2.values[2] +
+                vec3_1.values[2] * vec3_2.values[0];
+        res.values[2] =
+            vec3_1.values[0] * vec3_2.values[1] -
+                vec3_1.values[1] * vec3_2.values[0];
+        return res;
+    }
+}

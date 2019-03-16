@@ -9,7 +9,10 @@ export class Renderer {
 
     ctx: DrawingContext;
 
-    constructor(canvas: HTMLCanvasElement, context?: Function) {
+    constructor(
+        canvas: HTMLCanvasElement,
+        context?: (renderer: Renderer) => undefined
+    ) {
         this.ctx = {
             ctx: canvas.getContext('2d') || new CanvasRenderingContext2D(),
             height: canvas.height,
@@ -18,7 +21,7 @@ export class Renderer {
 
         if (context) {
             GameObject.renderer = this;
-            context();
+            context(this);
             GameObject.renderer = undefined;
         }
         this.ctx.ctx.fillStyle = 'black';
@@ -40,6 +43,39 @@ export class Renderer {
                 return (
                     Vec3.dotProduct(this.camera.normal, o.mesh.normals[i]) <= 0
                 );
+            });
+
+            const points = o.mesh.vectex.map(v => {
+                const p = Vec3.multiply(
+                    Vec3.add(v, o.transform.position),
+                    o.transform.scale
+                );
+                const ajusted = Vec3.divide(
+                    Vec3.multiply(p, this.camera.zoom),
+                    this.camera.isometricFactor
+                );
+                const vectDir = Vec3.add(ajusted, this.camera.position);
+                const num =
+                    this.camera.isometricFactor -
+                    Vec3.dotProduct(this.camera.normal, this.camera.position);
+                const den = Vec3.dotProduct(
+                    this.camera.normal,
+                    Vec3.add(vectDir, o.transform.position)
+                );
+
+                const t = num / den;
+
+                const res = [
+                    t * vectDir.x + this.ctx.width / 2,
+                    t * vectDir.y + this.ctx.height / 2
+                ];
+
+                return res;
+            });
+
+            edges.forEach(e => {
+                draw.moveTo(points[e[0]][0], points[e[0]][1]);
+                draw.lineTo(points[e[1]][0], points[e[1]][1]);
             });
         });
 
