@@ -7,7 +7,7 @@ export class GameObject {
     static renderer: Renderer | undefined;
 
     transform: Transform = new Transform();
-    private mesh: Mesh = new Mesh();
+    mesh: Mesh = new Mesh();
 
     constructor() {
         if (GameObject.renderer) GameObject.renderer.addObject(this);
@@ -15,9 +15,5 @@ export class GameObject {
 
     addToScene() {
         throw 'unimplemented';
-    }
-
-    getShape(): { vertices: Vec3[]; edges: Int16Array[] } {
-        return { vertices: [], edges: [] };
     }
 }

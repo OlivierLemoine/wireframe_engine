@@ -33,12 +33,10 @@ export class Vec3 {
     public get z(): number {
         return this.values[2];
     }
-}
 
-export namespace Vec3 {
-    function add(vec3_1: Vec3, vec3_2: Vec3): Vec3;
-    function add(vec3: Vec3, n: number): Vec3;
-    function add(a: Vec3, b: Vec3 | number): Vec3 {
+    static add(vec3_1: Vec3, vec3_2: Vec3): Vec3;
+    static add(vec3: Vec3, n: number): Vec3;
+    static add(a: Vec3, b: Vec3 | number): Vec3 {
         let res = new Vec3();
         if (typeof b === 'number') {
             res.values[0] = a.values[0] + b;
@@ -52,9 +50,9 @@ export namespace Vec3 {
         return res;
     }
 
-    function sub(vec3_1: Vec3, vec3_2: Vec3): Vec3;
-    function sub(vec3: Vec3, n: number): Vec3;
-    function sub(a: Vec3, b: Vec3 | number): Vec3 {
+    static sub(vec3_1: Vec3, vec3_2: Vec3): Vec3;
+    static sub(vec3: Vec3, n: number): Vec3;
+    static sub(a: Vec3, b: Vec3 | number): Vec3 {
         let res = new Vec3();
         if (typeof b === 'number') {
             res.values[0] = a.values[0] - b;
@@ -68,9 +66,9 @@ export namespace Vec3 {
         return res;
     }
 
-    function multiply(vec3_1: Vec3, vec3_2: Vec3): Vec3;
-    function multiply(vec3: Vec3, n: number): Vec3;
-    function multiply(a: Vec3, b: Vec3 | number): Vec3 {
+    static multiply(vec3_1: Vec3, vec3_2: Vec3): Vec3;
+    static multiply(vec3: Vec3, n: number): Vec3;
+    static multiply(a: Vec3, b: Vec3 | number): Vec3 {
         let res = new Vec3();
         if (typeof b === 'number') {
             res.values[0] = a.values[0] * b;
@@ -84,9 +82,9 @@ export namespace Vec3 {
         return res;
     }
 
-    function divide(vec3_1: Vec3, vec3_2: Vec3): Vec3;
-    function divide(vec3: Vec3, n: number): Vec3;
-    function divide(a: Vec3, b: Vec3 | number): Vec3 {
+    static divide(vec3_1: Vec3, vec3_2: Vec3): Vec3;
+    static divide(vec3: Vec3, n: number): Vec3;
+    static divide(a: Vec3, b: Vec3 | number): Vec3 {
         let res = new Vec3();
         if (typeof b === 'number') {
             res.values[0] = a.values[0] / b;
@@ -97,6 +95,28 @@ export namespace Vec3 {
             res.values[1] = a.values[1] / b.values[1];
             res.values[2] = a.values[2] / b.values[2];
         }
+        return res;
+    }
+
+    static dotProduct(vec3_1: Vec3, vec3_2: Vec3): number {
+        return (
+            vec3_1.values[0] * vec3_2.values[0] +
+            vec3_1.values[1] * vec3_2.values[1] +
+            vec3_1.values[2] * vec3_2.values[2]
+        );
+    }
+
+    static vectorialProduct(vec3_1: Vec3, vec3_2: Vec3): Vec3 {
+        let res = new Vec3();
+        res.values[0] =
+            vec3_1.values[1] * vec3_2.values[2] -
+            vec3_1.values[2] * vec3_2.values[1];
+        res.values[1] =
+            -vec3_1.values[0] * vec3_2.values[2] +
+            vec3_1.values[2] * vec3_2.values[0];
+        res.values[2] =
+            vec3_1.values[0] * vec3_2.values[1] -
+            vec3_1.values[1] * vec3_2.values[0];
         return res;
     }
 }
