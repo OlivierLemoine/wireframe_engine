@@ -1,6 +1,27 @@
 export class Vec3 {
     values: Float64Array = new Float64Array(3);
 
+    constructor();
+    constructor(vec3: Vec3);
+    constructor(x: number, y: number, z: number);
+    constructor(...arg: any[]) {
+        if (arg) {
+            if (arg[0] instanceof Vec3) {
+                const v: Vec3 = arg[0];
+                this.values[0] = v.values[0];
+                this.values[1] = v.values[1];
+                this.values[2] = v.values[2];
+            } else {
+                const x: number = arg[0],
+                    y: number = arg[1],
+                    z: number = arg[2];
+                this.values[0] = x;
+                this.values[1] = y;
+                this.values[2] = z;
+            }
+        }
+    }
+
     public get x(): number {
         return this.values[0];
     }
