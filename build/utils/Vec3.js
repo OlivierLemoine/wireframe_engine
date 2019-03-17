@@ -1,7 +1,7 @@
 export class Vec3 {
     constructor(...arg) {
-        this.values = new Float64Array(3);
-        if (arg) {
+        this.values = new Float64Array(3).fill(0);
+        if (arg.length > 0) {
             if (arg[0] instanceof Vec3) {
                 const v = arg[0];
                 this.values[0] = v.values[0];
