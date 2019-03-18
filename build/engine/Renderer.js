@@ -65,10 +65,14 @@ export class Renderer {
                     vectPro.push(sens(contour[(j + 1) % contour.length], contour[j], points[i]));
                 }
                 const chgmtIndex1 = vectPro.findIndex(v => v < 0);
-                const chgmtIndex2 = vectPro.findIndex(v => v > 0);
-                const neg = vectPro.filter(n => n < 0);
-                const pos = vectPro.filter(n => n > 0);
-                if (chgmtIndex1 === -1 || chgmtIndex2 === -1) {
+                // const chgmtIndex2 = vectPro.findIndex(v => v > 0);
+                let ind2 = [];
+                vectPro.forEach((v, i) => {
+                    if (v > 0)
+                        ind2.push(i);
+                });
+                const chgmtIndex2 = ind2[ind2.length - 1];
+                if (chgmtIndex1 === -1 || chgmtIndex2 === undefined) {
                 }
                 else {
                     contour = [
@@ -76,6 +80,22 @@ export class Renderer {
                         points[i],
                         ...contour.slice((chgmtIndex2 + 1) % contour.length),
                     ];
+                    // if (
+                    //     sens(
+                    //         contour[(chgmtIndex2 + 1) % contour.length],
+                    //         contour[chgmtIndex2],
+                    //         contour[
+                    //             (chgmtIndex2 - 1 + contour.length) %
+                    //                 contour.length
+                    //         ],
+                    //     ) > 0
+                    // ) {
+                    //     contour.splice(chgmtIndex2, 1);
+                    // }
+                    if (sens(contour[chgmtIndex2], contour[(chgmtIndex2 + 1) % contour.length], contour[(chgmtIndex2 - 1 + contour.length) %
+                        contour.length]) < 0) {
+                        contour.splice(chgmtIndex2, 1);
+                    }
                 }
             }
             contour.forEach((c, i) => {
