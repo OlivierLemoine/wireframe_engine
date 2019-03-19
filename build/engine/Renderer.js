@@ -45,6 +45,7 @@ export class Renderer {
             .forEach(o => {
             let drawPath = new Path2D();
             const points = o.mesh.vectex.map(v => {
+                const rotated = o.transform.rotation.rotate(v);
                 const p = Vec3.add(Vec3.multiply(v, o.transform.scale), o.transform.position);
                 const ajusted = Vec3.divide(Vec3.multiply(p, this.camera.zoom), this.camera.isometricFactor);
                 const vectDir = Vec3.add(ajusted, this.camera.position);

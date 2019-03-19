@@ -63,6 +63,7 @@ export class Renderer {
                 let drawPath = new Path2D();
 
                 const points = o.mesh.vectex.map(v => {
+                    const rotated = o.transform.rotation.rotate(v);
                     const p = Vec3.add(
                         Vec3.multiply(v, o.transform.scale),
                         o.transform.position,

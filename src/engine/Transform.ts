@@ -1,10 +1,15 @@
 import { Vec3 } from '../utils/Vec3.js';
 import { GameObject } from './GameObject.js';
+import { Quaternion } from '../utils/Quaternion.js';
 
 export class Transform {
     gameObject: GameObject;
 
     private _position: Vec3 = new Vec3();
+    rotation: Quaternion = new Quaternion();
+
+    private parent: Transform | null = null;
+    private _children: Transform[] = [];
 
     /**
      * Get : global position
@@ -40,8 +45,6 @@ export class Transform {
         this._scale = value;
     }
 
-    private parent: Transform | null = null;
-    private _children: Transform[] = [];
     public get children(): Transform[] {
         return this._children;
     }
@@ -59,6 +62,7 @@ export class Transform {
             const transform = arg[0] as Transform;
 
             this._position = new Vec3(transform._position);
+            this.rotation = new Quaternion(transform.rotation);
             this._scale = new Vec3(transform._scale);
             this._children = [];
             transform._children.forEach(c => {
