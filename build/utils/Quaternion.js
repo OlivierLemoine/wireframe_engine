@@ -19,7 +19,7 @@ export class Quaternion {
             }
             else {
                 const x = arg[0], y = arg[1], z = arg[2];
-                this.values = Quaternion.multiply(Quaternion.multiply(Quaternion.fromAngleAround(1, 0, 0, x), Quaternion.fromAngleAround(0, 1, 0, y)), new Quaternion(0, 0, 1, z)).values;
+                this.values = Quaternion.multiply(Quaternion.multiply(Quaternion.fromAngleAround(1, 0, 0, x), Quaternion.fromAngleAround(0, 1, 0, y)), Quaternion.fromAngleAround(0, 0, 1, z)).values;
             }
         }
     }

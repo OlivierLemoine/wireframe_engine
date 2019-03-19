@@ -61,7 +61,7 @@ export class Quaternion {
                         Quaternion.fromAngleAround(1, 0, 0, x),
                         Quaternion.fromAngleAround(0, 1, 0, y),
                     ),
-                    new Quaternion(0, 0, 1, z),
+                    Quaternion.fromAngleAround(0, 0, 1, z),
                 ).values;
             }
         }
