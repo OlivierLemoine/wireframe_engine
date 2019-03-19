@@ -1,11 +1,13 @@
 import { Vec3 } from '../utils/Vec3.js';
 import { GameObject } from './GameObject.js';
+import { Quaternion } from '../utils/Quaternion.js';
 export class Transform {
     constructor(...arg) {
         this._position = new Vec3();
-        this._scale = new Vec3(1, 1, 1);
+        this.rotation = new Quaternion(1, 0, 0, 0);
         this.parent = null;
         this._children = [];
+        this._scale = new Vec3(1, 1, 1);
         if (arg[0] instanceof GameObject) {
             const gameObject = arg[0];
             this.gameObject = gameObject;
@@ -13,6 +15,7 @@ export class Transform {
         else {
             const transform = arg[0];
             this._position = new Vec3(transform._position);
+            this.rotation = new Quaternion(transform.rotation);
             this._scale = new Vec3(transform._scale);
             this._children = [];
             transform._children.forEach(c => {

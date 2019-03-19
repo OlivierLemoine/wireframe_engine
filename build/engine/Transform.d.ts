@@ -1,8 +1,12 @@
 import { Vec3 } from '../utils/Vec3.js';
 import { GameObject } from './GameObject.js';
+import { Quaternion } from '../utils/Quaternion.js';
 export declare class Transform {
     gameObject: GameObject;
     private _position;
+    rotation: Quaternion;
+    private parent;
+    private _children;
     /**
      * Get : global position
      * */
@@ -18,8 +22,6 @@ export declare class Transform {
     * | Set : local scale
     * */
     scale: Vec3;
-    private parent;
-    private _children;
     readonly children: Transform[];
     constructor(gameObject: GameObject);
     /**
