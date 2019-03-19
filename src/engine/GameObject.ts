@@ -8,7 +8,7 @@ import { Sphere } from '../shapes/Sphere.js';
 export class GameObject {
     static renderer: Renderer | undefined;
 
-    transform: Transform = new Transform();
+    transform: Transform = new Transform(this);
     mesh: Mesh;
 
     constructor();

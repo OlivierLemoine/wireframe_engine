@@ -4,7 +4,7 @@ import { Cube } from '../shapes/Cube.js';
 import { Sphere } from '../shapes/Sphere.js';
 export class GameObject {
     constructor(...arg) {
-        this.transform = new Transform();
+        this.transform = new Transform(this);
         switch (arg[0]) {
             case 'cube':
                 this.mesh = new Cube();
