@@ -1,8 +1,17 @@
 export class Vec3 {
     values: Float64Array = new Float64Array(3).fill(0);
 
+    /**
+     * 0 initialize Vect3
+     */
     constructor();
+    /**
+     * Copy constructor
+     */
     constructor(vec3: Vec3);
+    /**
+     * Initialize to x, y and z
+     */
     constructor(x: number, y: number, z: number);
     constructor(...arg: any[]) {
         if (arg.length > 0) {
@@ -110,7 +119,7 @@ export class Vec3 {
         );
     }
 
-    static distanceSquared(vec3: Vec3): number{
+    static distanceSquared(vec3: Vec3): number {
         return Vec3.dotProduct(vec3, vec3);
     }
 
