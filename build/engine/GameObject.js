@@ -1,12 +1,16 @@
 import { Transform } from './Transform.js';
 import { Mesh } from '../shapes/Mesh.js';
 import { Cube } from '../shapes/Cube.js';
+import { Sphere } from '../shapes/Sphere.js';
 export class GameObject {
     constructor(...arg) {
         this.transform = new Transform();
         switch (arg[0]) {
             case 'cube':
                 this.mesh = new Cube();
+                break;
+            case 'sphere':
+                this.mesh = new Sphere(arg[1]);
                 break;
             default:
                 this.mesh = new Mesh();

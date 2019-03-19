@@ -7,5 +7,6 @@ export declare class GameObject {
     mesh: Mesh;
     constructor();
     constructor(predefineShape: 'cube');
+    constructor(predefineShape: 'sphere', resolution: number);
     addToScene(renderer: Renderer): void;
 }

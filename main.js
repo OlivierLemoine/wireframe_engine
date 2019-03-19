@@ -6,30 +6,8 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 document.querySelector('body').append(canvas);
 
-let b = document.querySelector('input');
-
 new engine.Renderer(canvas, renderer => {
-    let o = new engine.GameObject();
-    
-    o.mesh.edges = [
-        [0, 1, 2],
-        [0, 2, 3],
-
-        [5, 4, 6],
-        [6, 4, 7],
-
-        [0, 3, 4],
-        [4, 3, 7],
-
-        [0, 4, 1],
-        [1, 4, 5],
-
-        [1, 5, 2],
-        [5, 6, 2],
-
-        [3, 2, 7],
-        [2, 6, 7],
-    ];
+    let o = new engine.GameObject('sphere', 10);
 
     o.transform.position = new Vec3(0, 0, 10);
     o.transform.scale = new Vec3(10, 10, 10);
@@ -41,7 +19,7 @@ new engine.Renderer(canvas, renderer => {
     function frame() {
         t += 0.05;
 
-        o.transform.position = new Vec3(30 * Math.sin(t), 30 * Math.cos(t), 10);
+        o.transform.position = new Vec3(40 * Math.sin(t), 40 * Math.cos(t), 10);
         renderer.render();
 
         requestAnimationFrame(frame);
