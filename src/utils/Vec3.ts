@@ -110,6 +110,10 @@ export class Vec3 {
         );
     }
 
+    static distanceSquared(vec3: Vec3): number{
+        return Vec3.dotProduct(vec3, vec3);
+    }
+
     static vectorialProduct(vec3_1: Vec3, vec3_2: Vec3): Vec3 {
         let res = new Vec3();
         res.values[0] =

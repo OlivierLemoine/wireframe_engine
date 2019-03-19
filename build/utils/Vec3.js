@@ -89,6 +89,9 @@ export class Vec3 {
             vec3_1.values[1] * vec3_2.values[1] +
             vec3_1.values[2] * vec3_2.values[2]);
     }
+    static distanceSquared(vec3) {
+        return Vec3.dotProduct(vec3, vec3);
+    }
     static vectorialProduct(vec3_1, vec3_2) {
         let res = new Vec3();
         res.values[0] =

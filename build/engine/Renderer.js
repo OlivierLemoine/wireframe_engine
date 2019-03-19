@@ -22,9 +22,13 @@ export class Renderer {
         this.objects.push(object);
     }
     render() {
-        let a = new Path2D();
         //Projection
-        this.objects.forEach(o => {
+        this.ctx.ctx.fillRect(0, 0, this.ctx.width, this.ctx.height);
+        this.objects
+            .sort((a, b) => Vec3.distanceSquared(b.transform.position) -
+            Vec3.distanceSquared(a.transform.position))
+            .forEach(o => {
+            let drawPath = new Path2D();
             const points = o.mesh.vectex.map(v => {
                 const p = Vec3.add(Vec3.multiply(v, o.transform.scale), o.transform.position);
                 const ajusted = Vec3.divide(Vec3.multiply(p, this.camera.zoom), this.camera.isometricFactor);
@@ -126,15 +130,18 @@ export class Renderer {
             }
             contour.forEach((c, i) => {
                 if (i === 0)
-                    a.moveTo(c.proj[0], c.proj[1]);
+                    drawPath.moveTo(c.proj[0], c.proj[1]);
                 else
-                    a.lineTo(c.proj[0], c.proj[1]);
+                    drawPath.lineTo(c.proj[0], c.proj[1]);
             });
-            a.lineTo(contour[0].proj[0], contour[0].proj[1]);
+            drawPath.lineTo(contour[0].proj[0], contour[0].proj[1]);
+            this.ctx.ctx.fill(drawPath, 'nonzero');
+            this.ctx.ctx.stroke(drawPath);
         });
         //Draw
-        this.ctx.ctx.fillRect(0, 0, this.ctx.width, this.ctx.height);
-        this.ctx.ctx.stroke(a);
+        // this.ctx.ctx.fillRect(0, 0, this.ctx.width, this.ctx.height);
+        // this.ctx.ctx.fill()
+        // this.ctx.ctx.stroke(a);
     }
 }
 function sens(c1, c2, p) {

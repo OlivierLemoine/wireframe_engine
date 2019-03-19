@@ -16,5 +16,6 @@ export declare class Vec3 {
     static divide(vec3_1: Vec3, vec3_2: Vec3): Vec3;
     static divide(vec3: Vec3, n: number): Vec3;
     static dotProduct(vec3_1: Vec3, vec3_2: Vec3): number;
+    static distanceSquared(vec3: Vec3): number;
     static vectorialProduct(vec3_1: Vec3, vec3_2: Vec3): Vec3;
 }
