@@ -1,7 +1,16 @@
 export declare class Vec3 {
     values: Float64Array;
+    /**
+     * 0 initialize Vect3
+     */
     constructor();
+    /**
+     * Copy constructor
+     */
     constructor(vec3: Vec3);
+    /**
+     * Initialize to x, y and z
+     */
     constructor(x: number, y: number, z: number);
     readonly x: number;
     readonly y: number;

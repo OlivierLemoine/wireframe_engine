@@ -1,12 +1,14 @@
 import { Transform } from './Transform.js';
 import { Renderer } from './Renderer.js';
 import { Mesh } from '../shapes/Mesh.js';
-import { Vec3 } from '../utils/Vec3.js';
 import { Cube } from '../shapes/Cube.js';
 import { Sphere } from '../shapes/Sphere.js';
+import { Behaviour } from './Behaviour.js';
 
 export class GameObject {
     static renderer: Renderer | undefined;
+
+    behaviour: Behaviour = new Behaviour();
 
     transform: Transform = new Transform(this);
     mesh: Mesh;
@@ -24,6 +26,11 @@ export class GameObject {
      * @param resolution Number of point per circle
      */
     constructor(predefineShape: 'sphere', resolution: number);
+    /**
+     * Copy constructor
+     * @param copy Copy from copy
+     */
+    constructor(copy: GameObject);
     constructor(...arg: any[]) {
         switch (arg[0]) {
             case 'cube':
@@ -37,7 +44,17 @@ export class GameObject {
                 break;
         }
 
+        if (arg[0] instanceof GameObject) {
+            const copy = arg[0] as GameObject;
+            this.behaviour = copy.behaviour;
+            this.transform = new Transform(copy.transform);
+            this.transform.gameObject = this;
+            this.mesh = new Mesh(copy.mesh);
+        }
+
         if (GameObject.renderer) GameObject.renderer.addObject(this);
+
+        if (this.behaviour.init) this.behaviour.init(this);
     }
 
     /**

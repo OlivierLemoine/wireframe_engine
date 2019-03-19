@@ -6,10 +6,10 @@ import { Vec3 } from '../utils/Vec3.js';
 export class Renderer {
     objects: GameObject[] = [];
     camera: Camera = new Camera();
-    
+
     ctx: DrawingContext;
 
-    /** 
+    /**
      * Renderer
      * @param canvas Scene will be rendered in canvas
      * @param context If define, the function in which every objects will be attached to this renderer
@@ -181,6 +181,8 @@ export class Renderer {
                 drawPath.lineTo(contour[0].proj[0], contour[0].proj[1]);
                 this.ctx.ctx.fill(drawPath, 'nonzero');
                 this.ctx.ctx.stroke(drawPath);
+
+                if (o.behaviour.update) o.behaviour.update(o);
             });
 
         //Draw

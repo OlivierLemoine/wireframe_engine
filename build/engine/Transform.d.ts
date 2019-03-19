@@ -22,6 +22,11 @@ export declare class Transform {
     private _children;
     readonly children: Transform[];
     constructor(gameObject: GameObject);
-    translate(vec3: Vec3): void;
+    /**
+     * Copy constructor
+     */
+    constructor(transform: Transform);
+    translate(vec3: Vec3): undefined;
+    translate(x: number, y: number, z: number): undefined;
     addChild(transform: Transform): void;
 }

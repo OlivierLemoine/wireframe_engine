@@ -46,12 +46,41 @@ export class Transform {
         return this._children;
     }
 
-    constructor(gameObject: GameObject) {
-        this.gameObject = gameObject;
+    constructor(gameObject: GameObject);
+    /**
+     * Copy constructor
+     */
+    constructor(transform: Transform);
+    constructor(...arg: any[]) {
+        if (arg[0] instanceof GameObject) {
+            const gameObject = arg[0] as GameObject;
+            this.gameObject = gameObject;
+        } else {
+            const transform = arg[0] as Transform;
+
+            this._position = new Vec3(transform._position);
+            this._scale = new Vec3(transform._scale);
+            this._children = [];
+            transform._children.forEach(c => {
+                let tmp: GameObject = new GameObject(c.gameObject);
+                this.addChild(tmp.transform);
+            });
+
+            this.parent = transform.parent;
+
+            this.gameObject = transform.gameObject;
+        }
     }
 
-    translate(vec3: Vec3) {
-        this._position = Vec3.add(this._position, vec3);
+    translate(vec3: Vec3): undefined;
+    translate(x: number, y: number, z: number): undefined;
+    translate(...arg: any[]) {
+        if (arg[0] instanceof Transform) {
+            this._position = Vec3.add(this._position, arg[0]);
+        } else {
+            const tmp = new Vec3(arg[0], arg[1], arg[2]);
+            this._position = Vec3.add(this._position, tmp);
+        }
     }
 
     addChild(transform: Transform) {

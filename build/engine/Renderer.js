@@ -144,6 +144,8 @@ export class Renderer {
             drawPath.lineTo(contour[0].proj[0], contour[0].proj[1]);
             this.ctx.ctx.fill(drawPath, 'nonzero');
             this.ctx.ctx.stroke(drawPath);
+            if (o.behaviour.update)
+                o.behaviour.update(o);
         });
         //Draw
         // this.ctx.ctx.fillRect(0, 0, this.ctx.width, this.ctx.height);
