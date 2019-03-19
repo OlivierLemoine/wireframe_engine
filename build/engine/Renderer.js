@@ -2,6 +2,11 @@ import { GameObject } from './GameObject.js';
 import { Camera } from './Camera.js';
 import { Vec3 } from '../utils/Vec3.js';
 export class Renderer {
+    /**
+     * Renderer
+     * @param canvas Scene will be rendered in canvas
+     * @param context If define, the function in which every objects will be attached to this renderer
+     */
     constructor(canvas, context) {
         this.objects = [];
         this.camera = new Camera();
@@ -18,9 +23,11 @@ export class Renderer {
             GameObject.renderer = undefined;
         }
     }
+    /** Add an object to be rendered */
     addObject(object) {
         this.objects.push(object);
     }
+    /** Render into the context all the known objects */
     render() {
         //Projection
         this.ctx.ctx.fillRect(0, 0, this.ctx.width, this.ctx.height);

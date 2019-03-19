@@ -6,9 +6,14 @@ import { Vec3 } from '../utils/Vec3.js';
 export class Renderer {
     objects: GameObject[] = [];
     camera: Camera = new Camera();
-
+    
     ctx: DrawingContext;
 
+    /** 
+     * Renderer
+     * @param canvas Scene will be rendered in canvas
+     * @param context If define, the function in which every objects will be attached to this renderer
+     */
     constructor(
         canvas: HTMLCanvasElement,
         context?: (renderer: Renderer) => undefined,
@@ -29,10 +34,12 @@ export class Renderer {
         }
     }
 
+    /** Add an object to be rendered */
     addObject(object: GameObject) {
         this.objects.push(object);
     }
 
+    /** Render into the context all the known objects */
     render() {
         //Projection
         this.ctx.ctx.fillRect(0, 0, this.ctx.width, this.ctx.height);

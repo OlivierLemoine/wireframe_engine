@@ -11,8 +11,18 @@ export class GameObject {
     transform: Transform = new Transform(this);
     mesh: Mesh;
 
+    /**
+     * Create empty GameObject
+     */
     constructor();
+    /**
+     * Create GameObject with cubic mesh
+     */
     constructor(predefineShape: 'cube');
+    /**
+     * Create GameObject with spherical mesh
+     * @param resolution Number of point per circle
+     */
     constructor(predefineShape: 'sphere', resolution: number);
     constructor(...arg: any[]) {
         switch (arg[0]) {
@@ -30,6 +40,10 @@ export class GameObject {
         if (GameObject.renderer) GameObject.renderer.addObject(this);
     }
 
+    /**
+     * Add the GameObject to the scene
+     * @param renderer The renderer to be attatch to
+     */
     addToScene(renderer: Renderer) {
         renderer.addObject(this);
     }

@@ -19,6 +19,10 @@ export class GameObject {
         if (GameObject.renderer)
             GameObject.renderer.addObject(this);
     }
+    /**
+     * Add the GameObject to the scene
+     * @param renderer The renderer to be attatch to
+     */
     addToScene(renderer) {
         renderer.addObject(this);
     }
