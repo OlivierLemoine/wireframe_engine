@@ -1,0 +1,19 @@
+{
+  "name": "wireframe_engine",
+  "version": "1.0.0",
+  "description": "",
+  "main": "engine.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OlivierLemoine/wireframe_engine.git"
+  },
+  "author": "Olivier LEMOINE",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OlivierLemoine/wireframe_engine/issues"
+  },
+  "homepage": "https://github.com/OlivierLemoine/wireframe_engine#readme"
+}
