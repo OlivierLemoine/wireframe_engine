@@ -69,59 +69,59 @@ export class Renderer {
 
             let contour = points.slice(0, 2);
             for (let i = 2; i < points.length; i++) {
-                // let p = new Path2D();
-                // p.moveTo(contour[0].proj[0], contour[0].proj[1]);
-                // p.ellipse(
-                //     contour[0].proj[0],
-                //     contour[0].proj[1],
-                //     6,
-                //     6,
-                //     0,
-                //     0,
-                //     360,
-                // );
-                // p.ellipse(
-                //     contour[0].proj[0],
-                //     contour[0].proj[1],
-                //     4,
-                //     4,
-                //     0,
-                //     0,
-                //     360,
-                // );
-                // p.moveTo(contour[0].proj[0], contour[0].proj[1]);
-                // for (let k = 1; k < contour.length; k++) {
-                //     p.lineTo(contour[k].proj[0], contour[k].proj[1]);
-                //     p.ellipse(
-                //         contour[k].proj[0],
-                //         contour[k].proj[1],
-                //         4,
-                //         4,
-                //         0,
-                //         0,
-                //         360,
-                //     );
-                //     p.moveTo(contour[k].proj[0], contour[k].proj[1]);
-                // }
-                // this.ctx.ctx.fillRect(0, 0, this.ctx.width, this.ctx.height);
-                // if (points[i + 0]) {
-                //     let b = new Path2D();
-                //     b.moveTo(points[i + 0].proj[0], points[i + 0].proj[1]);
-                //     b.ellipse(
-                //         points[i + 0].proj[0],
-                //         points[i + 0].proj[1],
-                //         4,
-                //         4,
-                //         0,
-                //         0,
-                //         360,
-                //     );
-                //     p.addPath(b);
-                // }
-                // this.ctx.ctx.stroke(p);
-                // console.log('');
+                let p = new Path2D();
+                p.moveTo(contour[0].proj[0], contour[0].proj[1]);
+                p.ellipse(
+                    contour[0].proj[0],
+                    contour[0].proj[1],
+                    6,
+                    6,
+                    0,
+                    0,
+                    360,
+                );
+                p.ellipse(
+                    contour[0].proj[0],
+                    contour[0].proj[1],
+                    4,
+                    4,
+                    0,
+                    0,
+                    360,
+                );
+                p.moveTo(contour[0].proj[0], contour[0].proj[1]);
+                for (let k = 1; k < contour.length; k++) {
+                    p.lineTo(contour[k].proj[0], contour[k].proj[1]);
+                    p.ellipse(
+                        contour[k].proj[0],
+                        contour[k].proj[1],
+                        4,
+                        4,
+                        0,
+                        0,
+                        360,
+                    );
+                    p.moveTo(contour[k].proj[0], contour[k].proj[1]);
+                }
+                this.ctx.ctx.fillRect(0, 0, this.ctx.width, this.ctx.height);
+                if (points[i + 0]) {
+                    let b = new Path2D();
+                    b.moveTo(points[i + 0].proj[0], points[i + 0].proj[1]);
+                    b.ellipse(
+                        points[i + 0].proj[0],
+                        points[i + 0].proj[1],
+                        4,
+                        4,
+                        0,
+                        0,
+                        360,
+                    );
+                    p.addPath(b);
+                }
+                this.ctx.ctx.stroke(p);
+                console.log('');
 
-                let vectPro = [];
+                let vectPro: number[] = [];
                 for (let j = 0; j < contour.length; j++) {
                     vectPro.push(
                         sens(
@@ -130,6 +130,18 @@ export class Renderer {
                             points[i],
                         ),
                     );
+                }
+                if (
+                    vectPro[0] > 0 &&
+                    vectPro[vectPro.length - 1] > 0 &&
+                    vectPro.length > 2
+                ) {
+                    while (vectPro[0] > 0) {
+                        const firstElemV = vectPro.shift();
+                        const firstElemC = contour.shift();
+                        if (firstElemV) vectPro.push(firstElemV);
+                        if (firstElemC) contour.push(firstElemC);
+                    }
                 }
                 let ind2: number[] = [];
                 vectPro.forEach((v, i) => {
@@ -142,10 +154,11 @@ export class Renderer {
                         points[i],
                         ...contour.slice((ind2[0] + 1) % contour.length),
                     ];
-                } else if (ind2.length === 2) {
-                    if (ind2[1] - ind2[0] === 1)
-                        contour.splice(ind2[1], 1, points[i]);
-                    else contour.splice(ind2[0], 1, points[i]);
+                } else if (ind2.length > 1) {
+                    // if (ind2[1] - ind2[0] === 1)
+                    //     contour.splice(ind2[1], 1, points[i]);
+                    // else contour.splice(ind2[0], 1, points[i]);
+                    contour.splice(ind2[1], ind2.length - 1, points[i]);
                 }
             }
             contour.forEach((c, i) => {
