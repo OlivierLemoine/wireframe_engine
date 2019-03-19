@@ -67,27 +67,118 @@ export class Renderer {
                 return { pos: p, proj: res };
             });
 
-            const edges = o.mesh.edges.filter(e => {
-                const res = Vec3.dotProduct(
-                    Vec3.sub(points[e[0]].pos, this.camera.position),
-                    Vec3.vectorialProduct(
-                        Vec3.sub(points[e[0]].pos, points[e[1]].pos),
-                        Vec3.sub(points[e[2]].pos, points[e[1]].pos),
-                    ),
-                );
-                return res <= 0;
-            });
+            let contour = points.slice(0, 2);
+            for (let i = 2; i < points.length; i++) {
+                // let p = new Path2D();
+                // p.moveTo(contour[0].proj[0], contour[0].proj[1]);
+                // p.ellipse(
+                //     contour[0].proj[0],
+                //     contour[0].proj[1],
+                //     6,
+                //     6,
+                //     0,
+                //     0,
+                //     360,
+                // );
+                // p.ellipse(
+                //     contour[0].proj[0],
+                //     contour[0].proj[1],
+                //     4,
+                //     4,
+                //     0,
+                //     0,
+                //     360,
+                // );
+                // p.moveTo(contour[0].proj[0], contour[0].proj[1]);
+                // for (let k = 1; k < contour.length; k++) {
+                //     p.lineTo(contour[k].proj[0], contour[k].proj[1]);
+                //     p.ellipse(
+                //         contour[k].proj[0],
+                //         contour[k].proj[1],
+                //         4,
+                //         4,
+                //         0,
+                //         0,
+                //         360,
+                //     );
+                //     p.moveTo(contour[k].proj[0], contour[k].proj[1]);
+                // }
+                // this.ctx.ctx.fillRect(0, 0, this.ctx.width, this.ctx.height);
+                // if (points[i + 0]) {
+                //     let b = new Path2D();
+                //     b.moveTo(points[i + 0].proj[0], points[i + 0].proj[1]);
+                //     b.ellipse(
+                //         points[i + 0].proj[0],
+                //         points[i + 0].proj[1],
+                //         4,
+                //         4,
+                //         0,
+                //         0,
+                //         360,
+                //     );
+                //     p.addPath(b);
+                // }
+                // this.ctx.ctx.stroke(p);
+                // console.log('');
 
-            edges.forEach(e => {
-                a.moveTo(points[e[0]].proj[0], points[e[0]].proj[1]);
-                a.lineTo(points[e[1]].proj[0], points[e[1]].proj[1]);
-                a.lineTo(points[e[2]].proj[0], points[e[2]].proj[1]);
-                a.lineTo(points[e[0]].proj[0], points[e[0]].proj[1]);
+                let vectPro = [];
+                for (let j = 0; j < contour.length; j++) {
+                    vectPro.push(
+                        sens(
+                            contour[(j + 1) % contour.length],
+                            contour[j],
+                            points[i],
+                        ),
+                    );
+                }
+                let ind2: number[] = [];
+                vectPro.forEach((v, i) => {
+                    if (v > 0) ind2.push(i);
+                });
+
+                if (ind2.length === 1) {
+                    contour = [
+                        ...contour.slice(0, (ind2[0] + 1) % contour.length),
+                        points[i],
+                        ...contour.slice((ind2[0] + 1) % contour.length),
+                    ];
+                } else if (ind2.length === 2) {
+                    if (ind2[1] - ind2[0] === 1)
+                        contour.splice(ind2[1], 1, points[i]);
+                    else contour.splice(ind2[0], 1, points[i]);
+                }
+            }
+            contour.forEach((c, i) => {
+                if (i === 0) a.moveTo(c.proj[0], c.proj[1]);
+                else a.lineTo(c.proj[0], c.proj[1]);
             });
+            a.lineTo(contour[0].proj[0], contour[0].proj[1]);
         });
 
         //Draw
         this.ctx.ctx.fillRect(0, 0, this.ctx.width, this.ctx.height);
         this.ctx.ctx.stroke(a);
     }
+}
+
+function sens(
+    c1: {
+        pos: Vec3;
+        proj: number[];
+    },
+    c2: {
+        pos: Vec3;
+        proj: number[];
+    },
+    p: {
+        pos: Vec3;
+        proj: number[];
+    },
+) {
+    const p1 = new Vec3(c1.proj[0], c1.proj[1], 0);
+    const p2 = new Vec3(c2.proj[0], c2.proj[1], 0);
+    const p3 = new Vec3(p.proj[0], p.proj[1], 0);
+    const v1 = Vec3.sub(p1, p2);
+    const v2 = Vec3.sub(p3, p2);
+    return Math.sign(Vec3.vectorialProduct(v1, v2).z);
 }

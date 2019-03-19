@@ -19,7 +19,7 @@ export class Vec3 {
                 this.values[1] = y;
                 this.values[2] = z;
             }
-        } 
+        }
     }
 
     public get x(): number {
@@ -32,6 +32,10 @@ export class Vec3 {
 
     public get z(): number {
         return this.values[2];
+    }
+
+    static eq(vec1: Vec3, vec2: Vec3) {
+        return vec1.x === vec2.x && vec1.y === vec2.y && vec1.z === vec2.z;
     }
 
     static add(vec3_1: Vec3, vec3_2: Vec3): Vec3;

@@ -6,6 +6,7 @@ export declare class Vec3 {
     readonly x: number;
     readonly y: number;
     readonly z: number;
+    static eq(vec1: Vec3, vec2: Vec3): boolean;
     static add(vec3_1: Vec3, vec3_2: Vec3): Vec3;
     static add(vec3: Vec3, n: number): Vec3;
     static sub(vec3_1: Vec3, vec3_2: Vec3): Vec3;

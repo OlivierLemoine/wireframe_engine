@@ -6,6 +6,8 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 document.querySelector('body').append(canvas);
 
+let b = document.querySelector('input');
+
 new engine.Renderer(canvas, renderer => {
     let o = new engine.GameObject();
     o.mesh.vectex = [
@@ -39,19 +41,27 @@ new engine.Renderer(canvas, renderer => {
         [2, 6, 7],
     ];
 
-    o.transform.position = new Vec3(0, 0, 5);
+    o.transform.position = new Vec3(0, 0, 10);
     o.transform.scale = new Vec3(10, 10, 10);
 
-    renderer.camera.isometricFactor = 100;
+    renderer.camera.isometricFactor = 500;
 
     let t = 0;
+    b.addEventListener('keydown', e => {
+        frame();
+    });
+
+    canvas.addEventListener('mousemove', e=>{
+        o.transform.position = new Vec3(e.x / 5 - 50, e.y / 5 - 50, 10);
+        renderer.render();
+    })
 
     function frame() {
         t += 0.05;
 
         o.transform.position = new Vec3(20 * Math.sin(t), 20 * Math.cos(t), 10);
         renderer.render();
-        requestAnimationFrame(frame);
+        // requestAnimationFrame(frame);
     }
 
     frame();
