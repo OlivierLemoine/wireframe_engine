@@ -9,8 +9,8 @@ let model = new engine.GameObject('cube');
 const rot = new engine.Quaternion(1, 0, 0, 0);
 let t = 0;
 model.behaviour.update = g => {
-    t += 0.1;
-    g.transform.translate(3 * Math.sin(t), 3 * Math.cos(t), 0);
+    t += 0.05;
+    g.transform.position = new engine.Vec3(30 * Math.sin(t), 30 * Math.cos(t), 10);
     // g.transform.rotation = engine.Quaternion.multiply(g.transform.rotation, rot);
 };
 model.transform.position = new engine.Vec3(-3, -3, 10);

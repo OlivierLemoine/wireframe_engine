@@ -4,7 +4,7 @@ import { Quaternion } from '../utils/Quaternion.js';
 export class Transform {
     constructor(...arg) {
         this._position = new Vec3();
-        this.rotation = new Quaternion();
+        this.rotation = new Quaternion(1, 0, 0, 0);
         this.parent = null;
         this._children = [];
         this._scale = new Vec3(1, 1, 1);

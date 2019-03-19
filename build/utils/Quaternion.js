@@ -22,9 +22,6 @@ export class Quaternion {
                 this.values = Quaternion.multiply(Quaternion.multiply(Quaternion.fromAngleAround(1, 0, 0, x), Quaternion.fromAngleAround(0, 1, 0, y)), new Quaternion(0, 0, 1, z)).values;
             }
         }
-        else {
-            this.values[0] = 1;
-        }
     }
     get x() {
         return this.values[0];
@@ -36,7 +33,7 @@ export class Quaternion {
         return this.values[2];
     }
     get w() {
-        return this.values[2];
+        return this.values[3];
     }
     static fromAngleAround(x, y, z, angle) {
         let res = new Quaternion();
@@ -48,7 +45,7 @@ export class Quaternion {
     }
     rotate(point) {
         let p = new Quaternion(0, point.x, point.y, point.z);
-        let res = Quaternion.multiply(this, p);
+        let res = Quaternion.multiply(Quaternion.multiply(this, p), Quaternion.conjugate(this));
         return new Vec3(res.y, res.z, res.w);
     }
     static add(quat1, quat2) {
@@ -82,5 +79,12 @@ export class Quaternion {
                 quat1.z * quat2.y +
                 quat1.w * quat2.x;
         return res;
+    }
+    static conjugate(quat) {
+        return new Quaternion(quat.x, -quat.y, -quat.z, -quat.w);
+    }
+    static normalize(quat) {
+        const size = Math.sqrt(Math.pow(quat.x, 2) + Math.pow(quat.y, 2) + Math.pow(quat.z, 2) + Math.pow(quat.w, 2));
+        return new Quaternion(quat.x / size, quat.y / size, quat.z / size, quat.w / size);
     }
 }

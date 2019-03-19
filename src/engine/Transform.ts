@@ -6,7 +6,7 @@ export class Transform {
     gameObject: GameObject;
 
     private _position: Vec3 = new Vec3();
-    rotation: Quaternion = new Quaternion();
+    rotation: Quaternion = new Quaternion(1, 0, 0, 0);
 
     private parent: Transform | null = null;
     private _children: Transform[] = [];

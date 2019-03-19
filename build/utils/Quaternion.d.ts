@@ -25,4 +25,6 @@ export declare class Quaternion {
     rotate(point: Vec3): Vec3;
     static add(quat1: Quaternion, quat2: Quaternion): Quaternion;
     static multiply(quat1: Quaternion, quat2: Quaternion): Quaternion;
+    static conjugate(quat: Quaternion): Quaternion;
+    static normalize(quat: Quaternion): Quaternion;
 }

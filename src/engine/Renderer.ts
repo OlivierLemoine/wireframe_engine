@@ -63,13 +63,11 @@ export class Renderer {
                 let drawPath = new Path2D();
 
                 const points = o.mesh.vectex.map(v => {
-                    const rotated = o.transform.rotation.rotate(v);
-                    const p = Vec3.add(
-                        Vec3.multiply(v, o.transform.scale),
-                        o.transform.position,
-                    );
+                    const scaled = Vec3.multiply(v, o.transform.scale);
+                    const rotated = o.transform.rotation.rotate(scaled);
+                    const positioned = Vec3.add(rotated, o.transform.position);
                     const ajusted = Vec3.divide(
-                        Vec3.multiply(p, this.camera.zoom),
+                        Vec3.multiply(positioned, this.camera.zoom),
                         this.camera.isometricFactor,
                     );
                     const vectDir = Vec3.add(ajusted, this.camera.position);
@@ -91,7 +89,7 @@ export class Renderer {
                         t * vectDir.y + this.ctx.height / 2,
                     ];
 
-                    return { pos: p, proj: res };
+                    return { pos: positioned, proj: res };
                 });
 
                 let contour = points.slice(0, 2);
@@ -130,7 +128,12 @@ export class Renderer {
                     //     );
                     //     p.moveTo(contour[k].proj[0], contour[k].proj[1]);
                     // }
-                    // this.ctx.ctx.fillRect(0, 0, this.ctx.width, this.ctx.height);
+                    // this.ctx.ctx.fillRect(
+                    //     0,
+                    //     0,
+                    //     this.ctx.width,
+                    //     this.ctx.height,
+                    // );
                     // if (points[i + 0]) {
                     //     let b = new Path2D();
                     //     b.moveTo(points[i + 0].proj[0], points[i + 0].proj[1]);
