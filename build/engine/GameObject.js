@@ -1,13 +1,21 @@
 import { Transform } from './Transform.js';
 import { Mesh } from '../shapes/Mesh.js';
+import { Cube } from '../shapes/Cube.js';
 export class GameObject {
-    constructor() {
+    constructor(...arg) {
         this.transform = new Transform();
-        this.mesh = new Mesh();
+        switch (arg[0]) {
+            case 'cube':
+                this.mesh = new Cube();
+                break;
+            default:
+                this.mesh = new Mesh();
+                break;
+        }
         if (GameObject.renderer)
             GameObject.renderer.addObject(this);
     }
-    addToScene() {
-        throw 'unimplemented';
+    addToScene(renderer) {
+        renderer.addObject(this);
     }
 }

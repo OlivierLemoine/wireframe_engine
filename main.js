@@ -10,17 +10,7 @@ let b = document.querySelector('input');
 
 new engine.Renderer(canvas, renderer => {
     let o = new engine.GameObject();
-    o.mesh.vectex = [
-        new engine.Vec3(-1, -1, -1),
-        new engine.Vec3(1, -1, -1),
-        new engine.Vec3(1, 1, -1),
-        new engine.Vec3(-1, 1, -1),
-
-        new engine.Vec3(-1, -1, 1),
-        new engine.Vec3(1, -1, 1),
-        new engine.Vec3(1, 1, 1),
-        new engine.Vec3(-1, 1, 1),
-    ];
+    
     o.mesh.edges = [
         [0, 1, 2],
         [0, 2, 3],
@@ -47,22 +37,14 @@ new engine.Renderer(canvas, renderer => {
     renderer.camera.isometricFactor = 500;
 
     let t = 0;
-    b.addEventListener('keydown', e => {
-        frame();
-    });
-
-    canvas.addEventListener('mousemove', e=>{
-        o.transform.position = new Vec3(e.x / 5 - 50, e.y / 5 - 50, 10);
-        renderer.render();
-    })
 
     function frame() {
         t += 0.05;
 
-        o.transform.position = new Vec3(20 * Math.sin(t), 20 * Math.cos(t), 10);
+        o.transform.position = new Vec3(30 * Math.sin(t), 30 * Math.cos(t), 10);
         renderer.render();
-        // requestAnimationFrame(frame);
-    }
 
+        requestAnimationFrame(frame);
+    }
     frame();
 });

@@ -6,5 +6,6 @@ export declare class GameObject {
     transform: Transform;
     mesh: Mesh;
     constructor();
-    addToScene(): void;
+    constructor(predefineShape: 'cube');
+    addToScene(renderer: Renderer): void;
 }

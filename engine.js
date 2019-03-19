@@ -1,7 +1,8 @@
 export * from './build/utils/Vec3.js';
-export * from './build/utils/DrawingContext.js'
+export * from './build/utils/DrawingContext.js';
 
 export * from './build/shapes/Mesh.js';
+export * from './build/shapes/Cube.js';
 
 export * from './build/engine/Camera.js';
 export * from './build/engine/Renderer.js';
