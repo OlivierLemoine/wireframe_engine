@@ -24,10 +24,4 @@ new engine.Renderer(canvas, renderer => {
     let c1 = modifiedCube.new();
     let c2 = new GameObject('cube');
     c2.transform.translate(0, 0, 20);
-
-    function frame() {
-        renderer.render();
-        requestAnimationFrame(frame);
-    }
-    frame();
 });

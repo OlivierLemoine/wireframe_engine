@@ -13,10 +13,12 @@ export class Renderer {
      * Renderer
      * @param canvas Scene will be rendered in canvas
      * @param context If define, the function in which every objects will be attached to this renderer
+     * @param autoUpdate If false, the user needs to define his own update function and call the render() method
      */
     constructor(
         canvas: HTMLCanvasElement,
         context?: (renderer: Renderer) => undefined,
+        autoUpdate = true,
     ) {
         this.ctx = {
             ctx: canvas.getContext('2d') || new CanvasRenderingContext2D(),
@@ -31,6 +33,14 @@ export class Renderer {
             GameObject.renderer = this;
             context(this);
             GameObject.renderer = undefined;
+        }
+
+        if (autoUpdate) {
+            let frame = () => {
+                this.render();
+                requestAnimationFrame(frame);
+            };
+            frame();
         }
     }
 
