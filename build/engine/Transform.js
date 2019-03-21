@@ -70,6 +70,9 @@ export class Transform {
             this._position = Vec3.add(this._position, tmp);
         }
     }
+    rotate(alpha, beta, gamma) {
+        this.rotation = Quaternion.multiply(this.rotation, new Quaternion(alpha, beta, gamma));
+    }
     addChild(transform) {
         this._children.push(transform);
         transform.parent = this;

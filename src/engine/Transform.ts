@@ -87,6 +87,13 @@ export class Transform {
         }
     }
 
+    rotate(alpha: number, beta: number, gamma: number) {
+        this.rotation = Quaternion.multiply(
+            this.rotation,
+            new Quaternion(alpha, beta, gamma),
+        );
+    }
+
     addChild(transform: Transform) {
         this._children.push(transform);
         transform.parent = this;
