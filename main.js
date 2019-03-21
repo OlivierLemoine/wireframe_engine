@@ -11,7 +11,7 @@ document.querySelector('body').append(canvas);
     );
     r.model.behaviour.update = g => {
         // g.transform.translate(0.1, 0, 0);
-        g.transform.rotate(0.05, 0.05, 0);
+        g.transform.rotate(0, 0.01, 0);
     };
 
     new e.Renderer(canvas, renderer => {

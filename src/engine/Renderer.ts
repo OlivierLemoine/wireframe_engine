@@ -2,6 +2,7 @@ import { GameObject } from './GameObject.js';
 import { Camera } from './Camera.js';
 import { DrawingContext } from '../utils/DrawingContext.js';
 import { Vec3 } from '../utils/Vec3.js';
+import { Quaternion } from '../utils/Quaternion.js';
 
 export class Renderer {
     objects: GameObject[] = [];
@@ -56,8 +57,8 @@ export class Renderer {
         this.objects
             .sort(
                 (a, b) =>
-                    Vec3.distanceSquared(b.transform.position) -
-                    Vec3.distanceSquared(a.transform.position),
+                    Vec3.distanceSquared(a.transform.rotation.rotate(b.transform.position)) -
+                    Vec3.distanceSquared(b.transform.rotation.rotate(a.transform.position)),
             )
             .forEach(o => {
                 if (o.behaviour.update) o.behaviour.update(o);
@@ -67,10 +68,10 @@ export class Renderer {
 
                 const points = o.mesh.vectex.map(v => {
                     const scaled = Vec3.multiply(v, o.transform.scale);
-                    const rotated = o.transform.rotation.rotate(scaled);
-                    const positioned = Vec3.add(rotated, o.transform.position);
+                    const positioned = Vec3.add(scaled, o.transform.position);
+                    const rotated = o.transform.rotation.rotate(positioned);
                     const ajusted = Vec3.divide(
-                        Vec3.multiply(positioned, this.camera.zoom),
+                        Vec3.multiply(rotated, this.camera.zoom),
                         this.camera.isometricFactor,
                     );
                     const vectDir = Vec3.add(ajusted, this.camera.position);

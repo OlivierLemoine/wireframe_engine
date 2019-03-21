@@ -4,9 +4,10 @@ import { Quaternion } from '../utils/Quaternion.js';
 export declare class Transform {
     gameObject: GameObject;
     private _position;
-    rotation: Quaternion;
+    private _rotation;
     private parent;
     private _children;
+    rotation: Quaternion;
     /**
      * Get : global position
      * */

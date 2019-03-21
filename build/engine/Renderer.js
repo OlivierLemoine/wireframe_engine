@@ -40,8 +40,8 @@ export class Renderer {
         //Projection
         this.ctx.ctx.fillRect(0, 0, this.ctx.width, this.ctx.height);
         this.objects
-            .sort((a, b) => Vec3.distanceSquared(b.transform.position) -
-            Vec3.distanceSquared(a.transform.position))
+            .sort((a, b) => Vec3.distanceSquared(a.transform.rotation.rotate(b.transform.position)) -
+            Vec3.distanceSquared(b.transform.rotation.rotate(a.transform.position)))
             .forEach(o => {
             if (o.behaviour.update)
                 o.behaviour.update(o);
@@ -50,9 +50,9 @@ export class Renderer {
             let drawPath = new Path2D();
             const points = o.mesh.vectex.map(v => {
                 const scaled = Vec3.multiply(v, o.transform.scale);
-                const rotated = o.transform.rotation.rotate(scaled);
-                const positioned = Vec3.add(rotated, o.transform.position);
-                const ajusted = Vec3.divide(Vec3.multiply(positioned, this.camera.zoom), this.camera.isometricFactor);
+                const positioned = Vec3.add(scaled, o.transform.position);
+                const rotated = o.transform.rotation.rotate(positioned);
+                const ajusted = Vec3.divide(Vec3.multiply(rotated, this.camera.zoom), this.camera.isometricFactor);
                 const vectDir = Vec3.add(ajusted, this.camera.position);
                 const num = this.camera.isometricFactor -
                     Vec3.dotProduct(this.camera.normal, this.camera.position);

@@ -6,11 +6,21 @@ export class Transform {
     gameObject: GameObject;
 
     private _position: Vec3 = new Vec3();
-    rotation: Quaternion = new Quaternion(1, 0, 0, 0);
+    private _rotation: Quaternion = new Quaternion(1, 0, 0, 0);
 
     private parent: Transform | null = null;
     private _children: Transform[] = [];
 
+    public get rotation(): Quaternion {
+        let res = this._rotation;
+        if (this.parent) {
+            res = Quaternion.multiply(res, this.parent.rotation);
+        }
+        return res;
+    }
+    public set rotation(value: Quaternion) {
+        this._rotation = value;
+    }
     /**
      * Get : global position
      * */
