@@ -30,5 +30,6 @@ export declare class Transform {
     constructor(transform: Transform);
     translate(vec3: Vec3): undefined;
     translate(x: number, y: number, z: number): undefined;
+    rotate(alpha: number, beta: number, gamma: number): void;
     addChild(transform: Transform): void;
 }
