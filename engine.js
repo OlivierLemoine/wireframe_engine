@@ -12,3 +12,5 @@ export * from './build/engine/Transform.js';
 export * from './build/engine/Behaviour.js';
 export * from './build/engine/GameObject.js';
 export * from './build/engine/GameObjectFactory.js';
+
+export * from './build/helpers/Load.js';

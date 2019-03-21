@@ -17,7 +17,7 @@ export class Renderer {
      */
     constructor(
         canvas: HTMLCanvasElement,
-        context?: (renderer: Renderer) => undefined,
+        context?: (renderer: Renderer) => void | undefined,
         autoUpdate = true,
     ) {
         this.ctx = {
