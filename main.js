@@ -1,28 +1,27 @@
-import * as engine from './engine.js';
+import * as e from './engine.js';
+import { Quaternion } from './build/utils/Quaternion.js';
 
 let canvas = document.createElement('canvas');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 document.querySelector('body').append(canvas);
 
-let model = new engine.GameObject('cube');
-const rot = new engine.Quaternion(0, 0, 0.1);
-
-let t = 0;
-model.behaviour.update = g => {
-    t += 0.05;
-    // g.transform.position = new engine.Vec3(30 * Math.sin(t), 30 * Math.cos(t), 10);
-    g.transform.rotation = engine.Quaternion.multiply(
-        g.transform.rotation,
-        rot,
+(async function() {
+    let r = e.GameObjectFactory(
+        await e.Load('./test_files/untitled.obj', 'obj'),
     );
-};
-model.transform.position = new engine.Vec3(-3, -3, 10);
-model.transform.scale = new engine.Vec3(10, 10, 10);
-let modifiedCube = engine.GameObjectFactory(model);
+    r.model.behaviour.update = g => {
+        g.transform.translate(0.1, 0, -0.1);
+        g.transform.rotation = e.Quaternion.multiply(
+            g.transform.rotation,
+            new Quaternion(0.1, 0, 0.1),
+        );
+    };
 
-new engine.Renderer(canvas, renderer => {
-    renderer.camera.isometricFactor = 500;
+    new e.Renderer(canvas, renderer => {
+        renderer.camera.isometricFactor = 500;
 
-    modifiedCube.new();
-});
+        let r1 = r.new();
+        r1.transform.position = new e.Vec3(0, 0, 10);
+    });
+})();
