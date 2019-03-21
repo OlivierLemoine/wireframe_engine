@@ -8,13 +8,13 @@ document.querySelector('body').append(canvas);
 
 (async function() {
     let r = e.GameObjectFactory(
-        await e.Load('./test_files/untitled.obj', 'obj'),
+        await e.Load('./test_files/drone.obj', 'obj'),
     );
     r.model.behaviour.update = g => {
-        g.transform.translate(0.1, 0, -0.1);
+        // g.transform.translate(0.1, 0, -0.1);
         g.transform.rotation = e.Quaternion.multiply(
             g.transform.rotation,
-            new Quaternion(0.1, 0, 0.1),
+            new Quaternion(0.1, 0, 0),
         );
     };
 
