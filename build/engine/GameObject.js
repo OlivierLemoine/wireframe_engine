@@ -38,3 +38,4 @@ export class GameObject {
         renderer.addObject(this);
     }
 }
+//# sourceMappingURL=GameObject.js.map

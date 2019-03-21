@@ -17,6 +17,7 @@ export async function Load(
                 switch (line[0] + line[1]) {
                     case 'o ':
                         if (child.mesh.vectex.length > 0) {
+                            balance(child);
                             res.transform.addChild(child.transform);
                             child = new GameObject();
                         }
@@ -39,6 +40,7 @@ export async function Load(
                         break;
                 }
             }
+            balance(child);
             res.transform.addChild(child.transform);
             break;
 
@@ -47,4 +49,11 @@ export async function Load(
     }
 
     return res;
+}
+
+function balance(g: GameObject) {
+    let barry = g.mesh.vectex.reduce((prev, curr) => Vec3.add(prev, curr));
+    barry = Vec3.divide(barry, g.mesh.vectex.length);
+    g.mesh.vectex = g.mesh.vectex.map(v => Vec3.sub(v, barry));
+    g.transform.translate(barry);
 }

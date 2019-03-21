@@ -106,3 +106,4 @@ export class Vec3 {
         return res;
     }
 }
+//# sourceMappingURL=Vec3.js.map

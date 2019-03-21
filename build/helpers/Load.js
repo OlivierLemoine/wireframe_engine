@@ -20,6 +20,7 @@ export function Load(file, type) {
                     switch (line[0] + line[1]) {
                         case 'o ':
                             if (child.mesh.vectex.length > 0) {
+                                balance(child);
                                 res.transform.addChild(child.transform);
                                 child = new GameObject();
                             }
@@ -35,6 +36,7 @@ export function Load(file, type) {
                             break;
                     }
                 }
+                balance(child);
                 res.transform.addChild(child.transform);
                 break;
             default:
@@ -43,3 +45,10 @@ export function Load(file, type) {
         return res;
     });
 }
+function balance(g) {
+    let barry = g.mesh.vectex.reduce((prev, curr) => Vec3.add(prev, curr));
+    barry = Vec3.divide(barry, g.mesh.vectex.length);
+    g.mesh.vectex = g.mesh.vectex.map(v => Vec3.sub(v, barry));
+    g.transform.translate(barry);
+}
+//# sourceMappingURL=Load.js.map

@@ -88,3 +88,4 @@ export class Quaternion {
         return new Quaternion(quat.x / size, quat.y / size, quat.z / size, quat.w / size);
     }
 }
+//# sourceMappingURL=Quaternion.js.map

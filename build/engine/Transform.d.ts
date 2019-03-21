@@ -29,6 +29,7 @@ export declare class Transform {
      * Copy constructor
      */
     constructor(transform: Transform);
+    getLocalPosition(): Vec3;
     translate(vec3: Vec3): undefined;
     translate(x: number, y: number, z: number): undefined;
     rotate(alpha: number, beta: number, gamma: number): void;

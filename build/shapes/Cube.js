@@ -15,3 +15,4 @@ export class Cube extends Mesh {
         ];
     }
 }
+//# sourceMappingURL=Cube.js.map

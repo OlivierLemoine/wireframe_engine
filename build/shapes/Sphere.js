@@ -12,3 +12,4 @@ export class Sphere extends Mesh {
         }
     }
 }
+//# sourceMappingURL=Sphere.js.map

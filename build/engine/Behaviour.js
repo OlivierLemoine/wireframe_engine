@@ -4,3 +4,4 @@ export class Behaviour {
         this.update = null;
     }
 }
+//# sourceMappingURL=Behaviour.js.map

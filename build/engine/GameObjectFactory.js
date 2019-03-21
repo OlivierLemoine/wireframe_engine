@@ -13,3 +13,4 @@ export function GameObjectFactory(model) {
         },
     };
 }
+//# sourceMappingURL=GameObjectFactory.js.map

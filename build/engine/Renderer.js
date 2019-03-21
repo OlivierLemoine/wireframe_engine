@@ -40,8 +40,11 @@ export class Renderer {
         //Projection
         this.ctx.ctx.fillRect(0, 0, this.ctx.width, this.ctx.height);
         this.objects
-            .sort((a, b) => Vec3.distanceSquared(a.transform.rotation.rotate(b.transform.position)) -
-            Vec3.distanceSquared(b.transform.rotation.rotate(a.transform.position)))
+            .sort((a, b) => {
+            let posa = Vec3.add(a.transform.rotation.rotate(a.transform.getLocalPosition()), Vec3.sub(a.transform.position, a.transform.getLocalPosition()));
+            let posb = Vec3.add(b.transform.rotation.rotate(b.transform.getLocalPosition()), Vec3.sub(b.transform.position, b.transform.getLocalPosition()));
+            return Vec3.distanceSquared(posa) - Vec3.distanceSquared(posb);
+        })
             .forEach(o => {
             if (o.behaviour.update)
                 o.behaviour.update(o);
@@ -50,9 +53,10 @@ export class Renderer {
             let drawPath = new Path2D();
             const points = o.mesh.vectex.map(v => {
                 const scaled = Vec3.multiply(v, o.transform.scale);
-                const positioned = Vec3.add(scaled, o.transform.position);
-                const rotated = o.transform.rotation.rotate(positioned);
-                const ajusted = Vec3.divide(Vec3.multiply(rotated, this.camera.zoom), this.camera.isometricFactor);
+                const prepos = Vec3.add(scaled, o.transform.getLocalPosition());
+                const rotated = o.transform.rotation.rotate(prepos);
+                const positioned = Vec3.sub(Vec3.add(rotated, o.transform.position), o.transform.getLocalPosition());
+                const ajusted = Vec3.divide(Vec3.multiply(positioned, this.camera.zoom), this.camera.isometricFactor);
                 const vectDir = Vec3.add(ajusted, this.camera.position);
                 const num = this.camera.isometricFactor -
                     Vec3.dotProduct(this.camera.normal, this.camera.position);
@@ -178,3 +182,4 @@ function sens(c1, c2, p) {
     const v2 = Vec3.sub(p3, p2);
     return Math.sign(Vec3.vectorialProduct(v1, v2).z);
 }
+//# sourceMappingURL=Renderer.js.map

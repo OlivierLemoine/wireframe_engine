@@ -71,6 +71,9 @@ export class Transform {
     get children() {
         return this._children;
     }
+    getLocalPosition() {
+        return this._position;
+    }
     translate(...arg) {
         if (arg[0] instanceof Transform) {
             this._position = Vec3.add(this._position, arg[0]);
@@ -88,3 +91,4 @@ export class Transform {
         transform.parent = this;
     }
 }
+//# sourceMappingURL=Transform.js.map

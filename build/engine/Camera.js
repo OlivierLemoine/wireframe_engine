@@ -7,3 +7,4 @@ export class Camera {
         this.zoom = 50;
     }
 }
+//# sourceMappingURL=Camera.js.map

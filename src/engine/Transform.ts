@@ -86,6 +86,10 @@ export class Transform {
         }
     }
 
+    getLocalPosition(){
+        return this._position;
+    }
+
     translate(vec3: Vec3): undefined;
     translate(x: number, y: number, z: number): undefined;
     translate(...arg: any[]) {
