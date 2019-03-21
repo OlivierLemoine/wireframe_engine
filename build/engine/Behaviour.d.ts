@@ -1,5 +1,5 @@
 import { GameObject } from './GameObject';
 export declare class Behaviour {
-    init: ((gameObject: GameObject) => undefined) | null;
-    update: ((gameObject: GameObject) => undefined) | null;
+    init: ((gameObject: GameObject) => void | undefined) | null;
+    update: ((gameObject: GameObject) => void | undefined) | null;
 }
