@@ -60,6 +60,8 @@ export class Renderer {
                     Vec3.distanceSquared(a.transform.position),
             )
             .forEach(o => {
+                if (o.behaviour.update) o.behaviour.update(o);
+
                 if (o.mesh.vectex.length < 2) return;
                 let drawPath = new Path2D();
 
@@ -196,8 +198,6 @@ export class Renderer {
                 drawPath.lineTo(contour[0].proj[0], contour[0].proj[1]);
                 this.ctx.ctx.fill(drawPath, 'nonzero');
                 this.ctx.ctx.stroke(drawPath);
-
-                if (o.behaviour.update) o.behaviour.update(o);
             });
 
         //Draw
