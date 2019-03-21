@@ -10,9 +10,8 @@ document.querySelector('body').append(canvas);
         await e.Load('./test_files/untitled2.obj', 'obj'),
     );
     r.model.behaviour.update = g => {
-        // g.transform.translate(0.1, 0, -0.1);
-        g.transform.children[1].rotate(0, 0, 0.1);
-        console.log('test');
+        // g.transform.translate(0.1, 0, 0);
+        g.transform.rotate(0.05, 0.05, 0);
     };
 
     new e.Renderer(canvas, renderer => {

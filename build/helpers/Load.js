@@ -19,8 +19,10 @@ export function Load(file, type) {
                 for (const line of lines) {
                     switch (line[0] + line[1]) {
                         case 'o ':
-                            res.transform.addChild(child.transform);
-                            child = new GameObject();
+                            if (child.mesh.vectex.length > 0) {
+                                res.transform.addChild(child.transform);
+                                child = new GameObject();
+                            }
                             break;
                         case 'v ':
                             let r = /v ([-0-9.]+) ([-0-9.]+) ([-0-9.]+)/g;
@@ -33,6 +35,7 @@ export function Load(file, type) {
                             break;
                     }
                 }
+                res.transform.addChild(child.transform);
                 break;
             default:
                 break;
