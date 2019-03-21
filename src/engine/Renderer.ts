@@ -60,6 +60,7 @@ export class Renderer {
                     Vec3.distanceSquared(a.transform.position),
             )
             .forEach(o => {
+                if (o.mesh.vectex.length < 2) return;
                 let drawPath = new Path2D();
 
                 const points = o.mesh.vectex.map(v => {

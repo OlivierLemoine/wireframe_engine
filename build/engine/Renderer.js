@@ -43,6 +43,8 @@ export class Renderer {
             .sort((a, b) => Vec3.distanceSquared(b.transform.position) -
             Vec3.distanceSquared(a.transform.position))
             .forEach(o => {
+            if (o.mesh.vectex.length < 2)
+                return;
             let drawPath = new Path2D();
             const points = o.mesh.vectex.map(v => {
                 const scaled = Vec3.multiply(v, o.transform.scale);

@@ -12,13 +12,26 @@ export function Load(file, type) {
     return __awaiter(this, void 0, void 0, function* () {
         let req = yield fetch(file).then(d => d.text());
         let res = new GameObject();
+        let child = new GameObject();
         switch (type) {
             case 'obj':
-                let regx = /v ([-0-9.]+) ([-0-9.]+) ([-0-9.]+)/g;
-                let exec = regx.exec(req);
-                while (exec !== null) {
-                    res.mesh.vectex.push(new Vec3(parseFloat(exec[1]), parseFloat(exec[2]), parseFloat(exec[3])));
-                    exec = regx.exec(req);
+                const lines = req.split('\n');
+                for (const line of lines) {
+                    switch (line[0] + line[1]) {
+                        case 'o ':
+                            res.transform.addChild(child.transform);
+                            child = new GameObject();
+                            break;
+                        case 'v ':
+                            let r = /v ([-0-9.]+) ([-0-9.]+) ([-0-9.]+)/g;
+                            let find = r.exec(line);
+                            if (find) {
+                                child.mesh.vectex.push(new Vec3(parseFloat(find[1]), parseFloat(find[2]), parseFloat(find[3])));
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 break;
             default:
